@@ -7,7 +7,7 @@ from .player_bullet import PlayerBullet # playerのBulletクラス
 # プレイヤークラス
 class Player:
     #定数
-    MOVE_SPEED = 2          # 移動速度
+    MOVE_SPEED = 1          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
     SHOT_INTERVAL = 20      # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
@@ -47,18 +47,7 @@ class Player:
                 self.x += Player.DASH_SPEED
             self.dir = 1
             self.type = 0
-        if pyxel.btn(pyxel.KEY_UP):
-            if self.isDash == False:
-                self.y -= Player.MOVE_SPEED
-            else:
-                self.y -= Player.DASH_SPEED
-            self.type = 1
-        if pyxel.btn(pyxel.KEY_DOWN):
-            if self.isDash == False:
-                self.y += Player.MOVE_SPEED
-            else:
-                self.y += Player.DASH_SPEED
-            self.type = 2
+        #key入力が終わったら
         if pyxel.btnr(pyxel.KEY_RIGHT) or pyxel.btnr(pyxel.KEY_LEFT):
             self.isWalk = False
             self.type = 0

@@ -51,7 +51,7 @@ class PlayScene:
         # プレイ画面の状態を初期化する
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
-        game.player = Player(game, 64, 16)  # プレイヤー
+        game.player = Player(game, 8, 96)  # プレイヤー
         #仮の敵を生成する
 #        self.spawn_enemy(64, 64)
 
