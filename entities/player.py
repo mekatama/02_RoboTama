@@ -8,9 +8,9 @@ from .player_bullet import PlayerBullet # playerのBulletクラス
 class Player:
     #定数
     MOVE_SPEED = 1          # 移動速度
-    DASH_SPEED = 10         # 特殊移動速度
+    DASH_SPEED = 3         # 特殊移動速度
     SHOT_INTERVAL = 20      # 弾の発射間隔
-    DASH_INTERVAL = 2       # dash間隔
+    DASH_INTERVAL = 40       # dash間隔
     HP = 3                  # 初期HP
 
     # プレイヤーを初期化する
@@ -68,6 +68,13 @@ class Player:
         else:
             self.isDashInput = False
 
+        # Sキー入力でdash
+        if pyxel.btnp(pyxel.KEY_S) and self.isDashInput == False:
+                self.isWalk = False
+                self.isDash = True
+                self.isDashInput = True
+                self.dash_timer = Player.DASH_INTERVAL
+
         # auto攻撃
         if self.shot_timer == 0:
             self.game.player_bullets.append(
@@ -88,6 +95,8 @@ class Player:
         u = pyxel.frame_count  // 8 % 2 * 16
         if self.isWalk == True:
             pyxel.blt(self.x, self.y, 0, 0 + u, 40, 16 * self.dir, 16, 0)
+        elif self.isDash == True:
+            pyxel.blt(self.x, self.y, 0, 16, 24, 16 * self.dir, 16, 0)
         else:
             pyxel.blt(self.x, self.y, 0, 0 + u, 24, 16 * self.dir, 16, 0)
         pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
