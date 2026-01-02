@@ -7,7 +7,7 @@ from .player_bullet import PlayerBullet # playerのBulletクラス
 # プレイヤークラス
 class Player:
     #定数
-    MOVE_SPEED = 1          # 移動速度
+    MOVE_SPEED = 0.7          # 移動速度
     DASH_SPEED = 3         # 特殊移動速度
     SHOT_INTERVAL = 20      # 弾の発射間隔
     DASH_INTERVAL = 40       # dash間隔
@@ -77,9 +77,14 @@ class Player:
 
         # auto攻撃
         if self.shot_timer == 0:
-            self.game.player_bullets.append(
-                PlayerBullet(self.game, self.x, self.y, self.dir, self.type)
-            )
+            if self.dir == 1:
+                self.game.player_bullets.append(
+                    PlayerBullet(self.game, self.x + 8, self.y + 4, self.dir, self.type)
+                )
+            else:
+                self.game.player_bullets.append(
+                    PlayerBullet(self.game, self.x, self.y + 4, self.dir, self.type)
+                )
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
 

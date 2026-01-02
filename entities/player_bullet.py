@@ -56,4 +56,4 @@ class PlayerBullet:
         """
     # 弾を描画する
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 0, 8, 8, 8, 0)
+        pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0)
