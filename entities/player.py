@@ -96,7 +96,7 @@ class Player:
                     
     # プレイヤーを描画する
     def draw(self):
-        # 4フレーム周期で0と8を交互に繰り返す
+        # 4フレーム周期で0と16を交互に繰り返す
         u = pyxel.frame_count  // 8 % 2 * 16
         if self.isWalk == True:
             pyxel.blt(self.x, self.y, 0, 0 + u, 40, 16 * self.dir, 16, 0)

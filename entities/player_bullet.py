@@ -7,6 +7,7 @@ class PlayerBullet:
     #定数
     SHOT_SPEED_X = 4        # shot speed x
     SHOT_SPEED_Y = 4        # shot speed y
+    PARTICLE_INTERVAL = 3  # particleの発生間隔
     # 弾を初期化してゲームに登録する
     def __init__(self, game, x, y, dir, type):
         self.game = game
@@ -14,7 +15,8 @@ class PlayerBullet:
         self.y = y
         self.dir = dir
         self.type = type
-        self.life_time = 0  #生存時間
+        self.life_time = 0      # 生存時間
+        self.particle_time = 0  # particle発生タイマー
         self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
 
      # 弾にダメージを与える
@@ -22,7 +24,7 @@ class PlayerBullet:
         # パーティクル出す
         for i in range(10):
             self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y + 4)
+                Particle(self.game, self.x + 4, self.y + 4, 0)
             )
         # hitパーティクル出す
         self.game.particleHits.append(
@@ -45,6 +47,18 @@ class PlayerBullet:
         elif self.type == 2:
             self.x += PlayerBullet.SHOT_SPEED_X * self.dir
             self.y += PlayerBullet.SHOT_SPEED_Y
+
+        # particle発生間隔
+        if self.particle_time > 0:
+            self.particle_time -= 1
+        # particle発生
+        if self.particle_time == 0:
+            self.game.particles.append(
+                Particle(self.game, self.x, self.y + 4, 1)
+            )
+            # 次の弾発射までの残り時間を設定する
+            self.particle_time = PlayerBullet.PARTICLE_INTERVAL
+
         """
         # 弾が画面外に出たら弾リストから登録を削除する
         if (self.x <= -8 or
