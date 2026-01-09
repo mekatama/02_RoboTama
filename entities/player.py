@@ -3,6 +3,7 @@ from collision import get_tile_type, in_collision, push_back
 from constants import TILE_EXIT, TILE_GEM, TILE_BOMB, TILE_SPIKE, TILE_WALL, TILE_ROAD
 
 from .player_bullet import PlayerBullet # playerのBulletクラス 
+from .particle import Particle  # 破壊時particle
 
 # プレイヤークラス
 class Player:
@@ -59,6 +60,10 @@ class Player:
         # dash時間の制御
         if self.dash_timer > 0:
             self.dash_timer -= 1
+            # particle発生
+            self.game.particles.append(
+                Particle(self.game, self.x + 8, self.y + 16, 0)
+            )
         else:
             self.isDash = False
         

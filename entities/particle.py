@@ -10,7 +10,7 @@ class Particle:
     def __init__(self, game, x, y, type):
         self.x = x
         self.y = y
-        self.type = type    # 0:全方位 1:弾軌跡
+        self.type = type    # 0:全方位 1:弾軌跡 2:dash
         self.timer = 0
         self.count = 0
         self.speed = 2.5    #速度
@@ -36,6 +36,9 @@ class Particle:
             if self.radius < Particle.END_RADIUS:
 #                self.game.particles.remove(self)
                  self.is_alive = False
+        elif self.type == 2:
+            # dash方向に合わせて表示
+            pass
 
     def draw(self):
         if self.type == 0:
