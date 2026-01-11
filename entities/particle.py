@@ -7,9 +7,10 @@ class Particle:
     START_RADIUS = 3    # 弾軌跡開始時の半径
     END_RADIUS = 1      # 弾軌跡終了時の半径
 
-    def __init__(self, game, x, y, type):
+    def __init__(self, game, x, y, dir, type):
         self.x = x
         self.y = y
+        self.dir = dir      # playerの方向
         self.type = type    # 0:全方位 1:弾軌跡 2:dash
         self.timer = 0
         self.count = 0
@@ -39,8 +40,10 @@ class Particle:
             # dash方向の逆に表示
             self.count += 1
             if self.count == 1:
-                self.aim = 1
-#                self.aim = pyxel.rndf(0, 2 * math.pi)
+                if self.dir == -1:
+                    self.aim = pyxel.rndf(0, 0.9)
+                elif self.dir == 1:
+                    self.aim = pyxel.rndf(2.2, 3.1)
             if self.count >= 1 + pyxel.rndi(1, 20):
                 self.is_alive = False
             #座標

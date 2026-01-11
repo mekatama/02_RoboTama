@@ -24,7 +24,7 @@ class PlayerBullet:
         # パーティクル出す
         for i in range(10):
             self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y + 4, 0)
+                Particle(self.game, self.x + 4, self.y + 4, self.dir,0)
             )
         # hitパーティクル出す
         self.game.particleHits.append(
@@ -56,7 +56,7 @@ class PlayerBullet:
             tmp_x = self.x
             tmp_y = self.y
             self.game.particles.append(
-                Particle(self.game, tmp_x, tmp_y + 4, 1)
+                Particle(self.game, tmp_x, tmp_y + 4, self.dir, 1)
             )
             # 次の弾発射までの残り時間を設定する
             self.particle_time = PlayerBullet.PARTICLE_INTERVAL

@@ -62,7 +62,7 @@ class Player:
             self.dash_timer -= 1
             # particle発生
             self.game.particles.append(
-                Particle(self.game, self.x + 8, self.y + 16, 2)
+                Particle(self.game, self.x + 8, self.y + 16, self.dir,2)
             )
         else:
             self.isDash = False
