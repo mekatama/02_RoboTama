@@ -55,9 +55,14 @@ class PlayerBullet:
         if self.particle_time == 0:
             tmp_x = self.x
             tmp_y = self.y
-            self.game.particles.append(
-                Particle(self.game, tmp_x, tmp_y + 4, self.dir, 1)
-            )
+            if self.dir == 1:
+                self.game.particles.append(
+                    Particle(self.game, tmp_x - 2, tmp_y + 4, self.dir, 1)
+                )
+            elif self.dir == -1:
+                self.game.particles.append(
+                    Particle(self.game, tmp_x + 10, tmp_y + 4, self.dir, 1)
+                )
             # 次の弾発射までの残り時間を設定する
             self.particle_time = PlayerBullet.PARTICLE_INTERVAL
 
