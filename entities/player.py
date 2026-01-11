@@ -62,7 +62,7 @@ class Player:
             self.dash_timer -= 1
             # particle発生
             self.game.particles.append(
-                Particle(self.game, self.x + 8, self.y + 16, 0)
+                Particle(self.game, self.x + 8, self.y + 16, 2)
             )
         else:
             self.isDash = False
@@ -82,6 +82,7 @@ class Player:
 
         # auto攻撃
         if self.shot_timer == 0:
+            # 向きで分岐
             if self.dir == 1:
                 self.game.player_bullets.append(
                     PlayerBullet(self.game, self.x + 8, self.y + 4, self.dir, self.type)

@@ -7,7 +7,7 @@ class PlayerBullet:
     #定数
     SHOT_SPEED_X = 4        # shot speed x
     SHOT_SPEED_Y = 4        # shot speed y
-    PARTICLE_INTERVAL = 3  # particleの発生間隔
+    PARTICLE_INTERVAL = 2  # particleの発生間隔
     # 弾を初期化してゲームに登録する
     def __init__(self, game, x, y, dir, type):
         self.game = game
@@ -53,8 +53,10 @@ class PlayerBullet:
             self.particle_time -= 1
         # particle発生
         if self.particle_time == 0:
+            tmp_x = self.x
+            tmp_y = self.y
             self.game.particles.append(
-                Particle(self.game, self.x, self.y + 4, 1)
+                Particle(self.game, tmp_x, tmp_y + 4, 1)
             )
             # 次の弾発射までの残り時間を設定する
             self.particle_time = PlayerBullet.PARTICLE_INTERVAL

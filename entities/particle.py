@@ -4,7 +4,7 @@ import math
 #■Particle
 class Particle:
     #定数
-    START_RADIUS = 4    # 弾軌跡開始時の半径
+    START_RADIUS = 3    # 弾軌跡開始時の半径
     END_RADIUS = 1      # 弾軌跡終了時の半径
 
     def __init__(self, game, x, y, type):
@@ -31,17 +31,24 @@ class Particle:
             self.y += self.speed * -math.sin(self.aim)
         elif self.type == 1:
             # 半径を小さくする
-            self.radius -= 1
+            self.radius -= 0.3
             # 半径が最小になったらエフェクトリストから登録を削除する
             if self.radius < Particle.END_RADIUS:
-#                self.game.particles.remove(self)
                  self.is_alive = False
         elif self.type == 2:
-            # dash方向に合わせて表示
-            pass
+            # dash方向の逆に表示
+            self.count += 1
+            if self.count == 1:
+                self.aim = 1
+#                self.aim = pyxel.rndf(0, 2 * math.pi)
+            if self.count >= 1 + pyxel.rndi(1, 20):
+                self.is_alive = False
+            #座標
+            self.x += self.speed * math.cos(self.aim)
+            self.y += self.speed * -math.sin(self.aim)
 
     def draw(self):
-        if self.type == 0:
+        if self.type == 0 or self.type == 2:
             pyxel.pset(self.x, self.y, 7)
         elif self.type == 1:
             pyxel.circ(self.x, self.y, self.radius, 7)
