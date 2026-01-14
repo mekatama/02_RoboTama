@@ -141,10 +141,10 @@ class PlayScene:
         pyxel.cls(0)
         # フィールドを描画する
         self.game.draw_field()
-        # プレイヤーを描画する
-        self.game.draw_player()
         # arm1を描画する
         self.game.draw_player_arm1()
+        # プレイヤーを描画する
+        self.game.draw_player()
         # 弾(プレイヤー)を描画する
         self.game.draw_player_bullets()
         # 爆弾を描画する

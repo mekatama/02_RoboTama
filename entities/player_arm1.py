@@ -1,6 +1,6 @@
 import pyxel
 
-# 爆弾クラス
+# arm1クラス
 class Player_Arm1:
     #定数
 
@@ -10,10 +10,11 @@ class Player_Arm1:
         self.x = x
         self.y = y
 
-    # 爆弾を更新するgame.
+    # arm1を更新する
     def update(self):
-        pass
+            self.x = self.game.player.x + 8
+            self.y = self.game.player.y + 4
 
-    # 爆弾を描画する
+    # arm1を描画する
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 40, 40, 8, 8, 0)
