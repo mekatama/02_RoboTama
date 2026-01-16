@@ -87,11 +87,11 @@ class Player:
             # 向きで分岐
             if self.dir == 1:
                 self.game.player_bullets.append(
-                    PlayerBullet(self.game, self.x + 8, self.y + 4, self.dir, self.type)
+                    PlayerBullet(self.game, self.x + 16, self.y + 2, self.dir, self.type)
                 )
             else:
                 self.game.player_bullets.append(
-                    PlayerBullet(self.game, self.x, self.y + 4, self.dir, self.type)
+                    PlayerBullet(self.game, self.x - 8, self.y + 2, self.dir, self.type)
                 )
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
