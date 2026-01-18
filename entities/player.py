@@ -38,6 +38,10 @@ class Player:
             if self.isDash == False:
                 self.isWalk = True
                 self.x -= Player.MOVE_SPEED
+                # particle発生
+                self.game.particles.append(
+                    Particle(self.game, self.x + 12, self.y + 16, self.dir,3)
+                )
             else:
                 self.x -= Player.DASH_SPEED
             self.dir = -1
@@ -46,6 +50,9 @@ class Player:
             if self.isDash == False:
                 self.isWalk = True
                 self.x += Player.MOVE_SPEED
+                self.game.particles.append(
+                    Particle(self.game, self.x + 4, self.y + 16, self.dir,3)
+                )
             else:
                 self.x += Player.DASH_SPEED
             self.dir = 1
