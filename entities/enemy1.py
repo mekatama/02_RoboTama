@@ -4,7 +4,7 @@ from .enemy_blast import Enemy_Blast    # enemyの爆発effectクラス
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
 
 # 敵クラス
-class Zako1:
+class Enemy1:
     #定数
     KIND_A = 0  # 敵A(空中)
     KIND_B = 1  # 敵B(地上停止)
@@ -16,11 +16,11 @@ class Zako1:
         self.game = game
         self.x = x
         self.y = y
+        self.dir = 1            # 1:right -1:left
         self.life_time = 0              # 生存時間
-        self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域
         self.armor = 6                   # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
-        self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
+        self.hit_area = (0, 0, 16, 16)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
     def add_damage(self):
@@ -44,15 +44,6 @@ class Zako1:
             self.game.enemies.remove(self)
         # スコアを加算する
 #        self.game.score += self.level * 10
-    """
-    # 狙う自機の方向の角度を計算する
-    def calc_player_angle(self):Zako1Zako1
-        player = self.game.player   # GAME内のplayerの情報にアクセス
-        if player is None:          # 自機が存在しない時
-            return 90               # 真下方向90度へ攻撃
-        else:                       # 自機が存在する時
-            return pyxel.atan2(player.y - self.y, player.x - self.x)
-    """
             
     # 敵を更新する
     def update(self):
@@ -78,9 +69,8 @@ class Zako1:
         """
     # 敵を描画する
     def draw(self):
-#        pyxel.blt(self.x, self.y, 0, 32, 40, 8, 8, 0)
-        # 4フレーム周期で0と8を交互に繰り返す
-        u = pyxel.frame_count  // 4 % 2 * 8
+        # 4フレーム周期で0と16を交互に繰り返す
+        u = pyxel.frame_count  // 4 % 2 * 16
         if self.is_damaged:
             #ダメージ演出
             self.is_damaged = False
@@ -89,6 +79,6 @@ class Zako1:
             pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
             pyxel.pal() #カラーパレット元に戻す
         else:
-            pyxel.blt(self.x, self.y, 0, 32, 40 + u, 8, 8, 0)
-#            pyxel.blt(self.x, self.y, 0, self.kind * 8 + 32, 40 + u, 8 * self.dir, 8, 0)
+#            pyxel.blt(self.x, self.y, 0, 32, 40 + u, 8, 8, 0)
+            pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
 

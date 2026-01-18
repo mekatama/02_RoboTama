@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Zako1
+from entities import Player, Enemy1
 
 from collision import get_tile_type
 from constants import (
@@ -53,7 +53,9 @@ class PlayScene:
         game.score = 0          # スコア
         game.player = Player(game, 8, 96)  # プレイヤー
         #仮の敵を生成する
-#        self.spawn_enemy(64, 64)
+        self.game.enemies.append(
+            Enemy1(self.game, 64, 96)
+        )
 
     # プレイ画面を更新する
     def update(self):
