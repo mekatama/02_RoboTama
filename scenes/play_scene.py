@@ -54,7 +54,7 @@ class PlayScene:
         game.player = Player(game, 8, 96)  # プレイヤー
         #仮の敵を生成する
         self.game.enemies.append(
-            Enemy1(self.game, 64, 96)
+            Enemy1(self.game, 100, 96)
         )
 
     # プレイ画面を更新する

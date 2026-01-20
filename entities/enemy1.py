@@ -16,11 +16,12 @@ class Enemy1:
         self.game = game
         self.x = x
         self.y = y
-        self.dir = 1            # 1:right -1:left
+        self.dir = 1                    # 1:right -1:left
         self.life_time = 0              # 生存時間
-        self.armor = 6                   # 装甲
+        self.armor = 6                  # 装甲
+        self.is_walk = False            #
         self.is_damaged = False         # ダメージを受けたかどうか
-        self.hit_area = (0, 0, 16, 16)    # 当たり判定の領域 (x1,y1,x2,y2) 
+        self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
     def add_damage(self):
@@ -49,6 +50,10 @@ class Enemy1:
     def update(self):
         # 生存時間をカウントする
         self.life_time += 1
+        # 仮walk
+        self.x -= 1
+        self.dir = -1
+        self.is_walk = False
         # [仮]Aキー入力で攻撃
         if pyxel.btn(pyxel.KEY_A):
             self.game.enemy_bullets.append(
@@ -71,14 +76,26 @@ class Enemy1:
     def draw(self):
         # 4フレーム周期で0と16を交互に繰り返す
         u = pyxel.frame_count  // 4 % 2 * 16
-        if self.is_damaged:
-            #ダメージ演出
-            self.is_damaged = False
-            for i in range(1, 15):
-                pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-            pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
-            pyxel.pal() #カラーパレット元に戻す
+        if self.is_walk == True:
+            if self.is_damaged:
+                #ダメージ演出
+                self.is_damaged = False
+                for i in range(1, 15):
+                    pyxel.pal(i, 15)    #カラーパレットの色を置き換える
+                pyxel.blt(self.x, self.y, 0, 32 + u, 56, 16 * self.dir, 16, 0)
+    #            pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
+                pyxel.pal() #カラーパレット元に戻す
+            else:
+                pyxel.blt(self.x, self.y, 0, 32 + u, 56, 16 * self.dir, 16, 0)
         else:
-#            pyxel.blt(self.x, self.y, 0, 32, 40 + u, 8, 8, 0)
-            pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
+            if self.is_damaged:
+                #ダメージ演出
+                self.is_damaged = False
+                for i in range(1, 15):
+                    pyxel.pal(i, 15)    #カラーパレットの色を置き換える
+                pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
+    #            pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
+                pyxel.pal() #カラーパレット元に戻す
+            else:
+                pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
 
