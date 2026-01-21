@@ -51,13 +51,13 @@ class Enemy1:
         # 生存時間をカウントする
         self.life_time += 1
         # 仮walk
-        self.x -= 1
+#        self.x -= 1
         self.dir = -1
         self.is_walk = False
         # [仮]Aキー入力で攻撃
         if pyxel.btn(pyxel.KEY_A):
             self.game.enemy_bullets.append(
-                Enemy_Bullet(self.game, self.x, self.y)
+                Enemy_Bullet(self.game, self.x, self.y + 4, self.dir)
             )
         """
         # 敵A(空中)を更新する

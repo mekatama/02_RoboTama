@@ -3,12 +3,14 @@ import pyxel
 # 弾クラス
 class Enemy_Bullet:
     #定数
+    SHOT_SPEED_X = 2        # shot speed x
 
     # 弾を初期化してゲームに登録する
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, dir):
         self.game = game
         self.x = x
         self.y = y
+        self.dir = dir
         self.life_time = 0  #生存時間
         self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
 
@@ -20,12 +22,10 @@ class Enemy_Bullet:
 
    # 弾を更新する
     def update(self):
-
         #生存時間カウント
         self.life_time += 1
         # 弾の座標を更新する
-        self.x += 2
-#        self.y += 2
+        self.x += Enemy_Bullet.SHOT_SPEED_X * self.dir
 
         # 弾が画面外に出たら弾リストから登録を削除する
         if (self.x <= -8 or
@@ -37,4 +37,4 @@ class Enemy_Bullet:
         
     # 弾を描画する
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 0, 8, 8, 8, 0)
+        pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir, 8, 0)
