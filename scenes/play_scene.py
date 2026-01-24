@@ -62,6 +62,7 @@ class PlayScene:
         game = self.game
         player = game.player
         player_arm1 = game.player_arm1
+        player_shield = game.player_shield
         player_bullets = game.player_bullets
         player_bombs = game.player_bombs
         enemies = game.enemies
@@ -77,6 +78,10 @@ class PlayScene:
         # arm1を更新する
         if player_arm1 is not None: #NONE使用時は判定方法が特殊
             player_arm1.update()
+
+        # shieldを更新する
+        if player_shield is not None: #NONE使用時は判定方法が特殊
+            player_shield.update()
 
         # 弾(プレイヤー)を更新する
         for player_bullet in player_bullets.copy():
@@ -147,6 +152,8 @@ class PlayScene:
         self.game.draw_player_arm1()
         # プレイヤーを描画する
         self.game.draw_player()
+        # shieldを描画する
+        self.game.draw_player_shield()
         # 弾(プレイヤー)を描画する
         self.game.draw_player_bullets()
         # 爆弾を描画する

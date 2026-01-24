@@ -3,6 +3,7 @@ from collision import get_tile_type, in_collision, push_back
 from constants import TILE_EXIT, TILE_GEM, TILE_BOMB, TILE_SPIKE, TILE_WALL, TILE_ROAD
 
 from .player_arm1 import Player_Arm1 # playerのarm1クラス 
+from .player_shield import Player_Shield # playerのshieldクラス 
 from .player_bullet import PlayerBullet # playerのBulletクラス 
 from .particle import Particle  # 破壊時particle
 
@@ -29,7 +30,8 @@ class Player:
         self.dash_timer = 0     # dash時間
         self.hp = Player.HP     # HP
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
-        game.player_arm1 = Player_Arm1(game, self.x + 16, self.y + 16)  # プレイヤー
+        game.player_arm1 = Player_Arm1(game, self.x + 16, self.y + 16)      # arm1
+        game.player_shield = Player_Shield(game, self.x, self.y)  # shield
 
     # プレイヤーを更新する
     def update(self):

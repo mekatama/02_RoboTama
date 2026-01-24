@@ -13,6 +13,7 @@ class Game:
         # ゲームの状態を初期化する
         self.player = None          # プレイヤー
         self.player_arm1 = None     # arm1
+        self.player_shield = None   # shield
         self.player_bullets = []    # 自機の弾のリスト
         self.player_bombs = []      # 自機の爆弾
         self.enemies = []           # 敵のリスト
@@ -54,6 +55,11 @@ class Game:
     def draw_player_arm1(self):
         if self.player_arm1 is not None:    # arm1が存在する時
             self.player_arm1.draw()
+
+    # shieldを描画する
+    def draw_player_shield(self):
+        if self.player_shield is not None:    # arm1が存在する時
+            self.player_shield.draw()
 
     # 弾(プレイヤー)を描画する
     def draw_player_bullets(self):
