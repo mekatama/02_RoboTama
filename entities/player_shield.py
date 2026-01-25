@@ -13,11 +13,11 @@ class Player_Shield:
     # 更新する
     def update(self):
         if self.game.player.dir == 1:
-            self.x = self.game.player.x + 9
+            self.x = self.game.player.x + 15
         elif self.game.player.dir == -1:
-            self.x = self.game.player.x - 1
+            self.x = self.game.player.x - 7
 
-        self.y = self.game.player.y + 8
+        self.y = self.game.player.y
 
     # 描画する
     def draw(self):
