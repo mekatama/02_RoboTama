@@ -23,46 +23,50 @@ class Player:
         self.y = y              # Y座標
         self.dir = 1            # 1:right -1:left
         self.type = 0           # 0:横 1:上 2:下
-        self.isWalk = False     # Walk flag
-        self.isDash = False     # Dash flag
-        self.isDashInput = False# Dash入力 flag
+        self.is_Move = True      # Move flag
+        self.is_Walk = False     # Walk flag
+        self.is_Dash = False     # Dash flag
+        self.is_DashInput = False# Dash入力 flag
+        self.is_Shield = False   # Shield flag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.dash_timer = 0     # dash時間
         self.hp = Player.HP     # HP
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
         game.player_arm1 = Player_Arm1(game, self.x + 16, self.y + 16)      # arm1
-        game.player_shield = Player_Shield(game, self.x, self.y)  # shield
+        game.player_shield = Player_Shield(game, self.x, self.y, self.dir)  # shield
 
     # プレイヤーを更新する
     def update(self):
-        # キー入力で自機を移動させる
-        if pyxel.btn(pyxel.KEY_LEFT):
-            if self.isDash == False:
-                self.isWalk = True
-                self.x -= Player.MOVE_SPEED
-                # particle発生
-                self.game.particles.append(
-                    Particle(self.game, self.x + 12, self.y + 16, self.dir,3)
-                )
-            else:
-                self.x -= Player.DASH_SPEED
-            self.dir = -1
-            self.type = 0
-        if pyxel.btn(pyxel.KEY_RIGHT):
-            if self.isDash == False:
-                self.isWalk = True
-                self.x += Player.MOVE_SPEED
-                self.game.particles.append(
-                    Particle(self.game, self.x + 4, self.y + 16, self.dir,3)
-                )
-            else:
-                self.x += Player.DASH_SPEED
-            self.dir = 1
-            self.type = 0
-        #key入力が終わったら
-        if pyxel.btnr(pyxel.KEY_RIGHT) or pyxel.btnr(pyxel.KEY_LEFT):
-            self.isWalk = False
-            self.type = 0
+        game = self.game
+        if self.is_Move == True:
+            # キー入力で自機を移動させる
+            if pyxel.btn(pyxel.KEY_LEFT):
+                if self.is_Dash == False:
+                    self.is_Walk = True
+                    self.x -= Player.MOVE_SPEED
+                    # particle発生
+                    self.game.particles.append(
+                        Particle(self.game, self.x + 12, self.y + 16, self.dir,3)
+                    )
+                else:
+                    self.x -= Player.DASH_SPEED
+                self.dir = -1
+                self.type = 0
+            if pyxel.btn(pyxel.KEY_RIGHT):
+                if self.is_Dash == False:
+                    self.is_Walk = True
+                    self.x += Player.MOVE_SPEED
+                    self.game.particles.append(
+                        Particle(self.game, self.x + 4, self.y + 16, self.dir,3)
+                    )
+                else:
+                    self.x += Player.DASH_SPEED
+                self.dir = 1
+                self.type = 0
+            #key入力が終わったら
+            if pyxel.btnr(pyxel.KEY_RIGHT) or pyxel.btnr(pyxel.KEY_LEFT):
+                self.is_Walk = False
+                self.type = 0
 
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
@@ -76,19 +80,39 @@ class Player:
                 Particle(self.game, self.x + 8, self.y + 16, self.dir,2)
             )
         else:
-            self.isDash = False
+            self.is_Dash = False
         
         # dash入力の制御
         if self.dash_timer > -15:
             self.dash_timer -= 1
         else:
-            self.isDashInput = False
+            self.is_DashInput = False
+
+        # Aキー入力でshield
+        if pyxel.btnp(pyxel.KEY_A):
+            if self.dir == 1:
+                game.player_shield.is_Shield = True
+                self.is_Move = False
+#                game.player_shield = Player_Shield(game, self.x + 15, self.y, self.dir)  # shield
+            elif self.dir == -1:
+                game.player_shield.is_Shield = True
+                self.is_Move = False
+#                game.player_shield = Player_Shield(game, self.x - 7, self.y, self.dir)  # shield
+        if pyxel.btnr(pyxel.KEY_A):
+            if self.dir == 1:
+                game.player_shield.is_Shield = False
+                self.is_Move = True
+#                game.player_shield = Player_Shield(game, self.x + 15, self.y, self.dir)  # shield
+            elif self.dir == -1:
+                game.player_shield.is_Shield = False
+                self.is_Move = True
+#                game.player_shield = Player_Shield(game, self.x - 7, self.y, self.dir)  # shield
 
         # Sキー入力でdash
-        if pyxel.btnp(pyxel.KEY_S) and self.isDashInput == False:
-                self.isWalk = False
-                self.isDash = True
-                self.isDashInput = True
+        if pyxel.btnp(pyxel.KEY_S) and self.is_DashInput == False:
+                self.is_Walk = False
+                self.is_Dash = True
+                self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
 
         # auto攻撃
@@ -115,9 +139,9 @@ class Player:
     def draw(self):
         # 4フレーム周期で0と16を交互に繰り返す
         u = pyxel.frame_count  // 8 % 2 * 16
-        if self.isWalk == True:
+        if self.is_Walk == True:
             pyxel.blt(self.x, self.y, 0, 0 + u, 40, 16 * self.dir, 16, 0)
-        elif self.isDash == True:
+        elif self.is_Dash == True:
             pyxel.blt(self.x, self.y, 0, 16, 24, 16 * self.dir, 16, 0)
         else:
             pyxel.blt(self.x, self.y, 0, 0 + u, 24, 16 * self.dir, 16, 0)
