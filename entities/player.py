@@ -33,7 +33,7 @@ class Player:
         self.hp = Player.HP     # HP
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
         game.player_arm1 = Player_Arm1(game, self.x + 16, self.y + 16)      # arm1
-        game.player_shield = Player_Shield(game, self.x, self.y, self.dir)  # shield
+        game.player_shield = Player_Shield(game, self.x, self.y)  # shield
 
     # プレイヤーを更新する
     def update(self):
@@ -90,23 +90,11 @@ class Player:
 
         # Aキー入力でshield
         if pyxel.btnp(pyxel.KEY_A):
-            if self.dir == 1:
-                game.player_shield.is_Shield = True
-                self.is_Move = False
-#                game.player_shield = Player_Shield(game, self.x + 15, self.y, self.dir)  # shield
-            elif self.dir == -1:
-                game.player_shield.is_Shield = True
-                self.is_Move = False
-#                game.player_shield = Player_Shield(game, self.x - 7, self.y, self.dir)  # shield
+            self.is_Move = False
+            game.player_shield.is_Shield = True
         if pyxel.btnr(pyxel.KEY_A):
-            if self.dir == 1:
-                game.player_shield.is_Shield = False
-                self.is_Move = True
-#                game.player_shield = Player_Shield(game, self.x + 15, self.y, self.dir)  # shield
-            elif self.dir == -1:
-                game.player_shield.is_Shield = False
-                self.is_Move = True
-#                game.player_shield = Player_Shield(game, self.x - 7, self.y, self.dir)  # shield
+            self.is_Move = True
+            game.player_shield.is_Shield = False
 
         # Sキー入力でdash
         if pyxel.btnp(pyxel.KEY_S) and self.is_DashInput == False:

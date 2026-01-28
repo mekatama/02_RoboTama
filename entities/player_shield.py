@@ -5,18 +5,18 @@ class Player_Shield:
     #定数
 
     # 初期化してゲームに登録する
-    def __init__(self, game, x, y, dir):
+    def __init__(self, game, x, y):
         self.game = game
         self.x = x
         self.y = y
-        self.dir = dir
+        self.dir = 1
         self.is_Shield = False
 
     # 更新する
     def update(self):
-        if self.dir == 1:
+        if self.game.player.dir == 1:
             self.x = self.game.player.x + 15
-        elif self.dir == -1:
+        elif self.game.player.dir == -1:
             self.x = self.game.player.x - 7
 
         self.y = self.game.player.y
