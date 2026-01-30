@@ -11,6 +11,7 @@ class Player_Shield:
         self.y = y
         self.dir = 1
         self.is_Shield = False
+        self.hit_area = (0, 0, 8, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 更新する
     def update(self):

@@ -55,7 +55,7 @@ class Enemy1:
         self.dir = -1
         self.is_walk = False
         # [仮]Aキー入力で攻撃
-        if pyxel.btn(pyxel.KEY_A):
+        if pyxel.btnp(pyxel.KEY_A):
             self.game.enemy_bullets.append(
                 Enemy_Bullet(self.game, self.x, self.y + 4, self.dir)
             )

@@ -88,11 +88,11 @@ class Player:
         else:
             self.is_DashInput = False
 
-        # Aキー入力でshield
-        if pyxel.btnp(pyxel.KEY_A):
+        # Qキー入力でshield
+        if pyxel.btnp(pyxel.KEY_Q):
             self.is_Move = False
             game.player_shield.is_Shield = True
-        if pyxel.btnr(pyxel.KEY_A):
+        if pyxel.btnr(pyxel.KEY_Q):
             self.is_Move = True
             game.player_shield.is_Shield = False
 
@@ -102,7 +102,7 @@ class Player:
                 self.is_Dash = True
                 self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
-
+        """
         # auto攻撃
         if self.shot_timer == 0:
             # 向きで分岐
@@ -116,7 +116,7 @@ class Player:
                 )
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
-
+        """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
         self.x = min(self.x, pyxel.width - 8)   #小さい数値を使う

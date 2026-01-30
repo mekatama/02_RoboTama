@@ -120,6 +120,11 @@ class PlayScene:
                 enemy_bullet.add_damage()         # 敵の弾にダメージを与える
                 game.change_scene("gameover")
                 return
+            # 弾(enemy)とshieldが接触したら消去
+            if player_shield is not None and check_collision(player_shield, enemy_bullet):
+                if player_shield.is_Shield == True:
+                    enemy_bullet.add_damage()         # 敵の弾にダメージを与える
+                    return
 
         # 破壊時particlesを更新する
         for particle in particles.copy():
