@@ -20,6 +20,10 @@ class Enemy_Bullet:
 
      # 弾にダメージを与える
     def add_damage(self):
+        # hitパーティクル出す
+        self.game.particleHits.append(
+            ParticleHit(self.game, self.x, self.y + 4)
+        )
         # 弾をリストから削除する
         if self in self.game.enemy_bullets:    # 自機の弾リストに登録されている時
             self.game.enemy_bullets.remove(self)
