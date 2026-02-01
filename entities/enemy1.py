@@ -52,7 +52,7 @@ class Enemy1:
         self.life_time += 1
         # 仮walk
 #        self.x -= 1
-        self.dir = -1
+        self.dir = 1
         self.is_walk = False
         # [仮]Aキー入力で攻撃
         if pyxel.btnp(pyxel.KEY_A):
@@ -83,7 +83,6 @@ class Enemy1:
                 for i in range(1, 15):
                     pyxel.pal(i, 15)    #カラーパレットの色を置き換える
                 pyxel.blt(self.x, self.y, 0, 32 + u, 56, 16 * self.dir, 16, 0)
-    #            pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
                 pyxel.pal() #カラーパレット元に戻す
             else:
                 pyxel.blt(self.x, self.y, 0, 32 + u, 56, 16 * self.dir, 16, 0)
@@ -94,7 +93,6 @@ class Enemy1:
                 for i in range(1, 15):
                     pyxel.pal(i, 15)    #カラーパレットの色を置き換える
                 pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
-    #            pyxel.blt(self.x, self.y, 0, 8 + 32, 56 + u, 8, 8, 0)
                 pyxel.pal() #カラーパレット元に戻す
             else:
                 pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
