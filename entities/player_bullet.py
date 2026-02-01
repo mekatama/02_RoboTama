@@ -14,7 +14,7 @@ class PlayerBullet:
         self.x = x
         self.y = y
         self.dir = dir
-        self.type = type
+        self.type = type        # 0:通常弾 1:近接攻撃
         self.life_time = 0      # 生存時間
         self.particle_time = 0  # particle発生タイマー
         self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
@@ -41,30 +41,30 @@ class PlayerBullet:
         # 弾の座標を更新する(type 0:横 1:上 2:下)
         if self.type == 0:
             self.x += PlayerBullet.SHOT_SPEED_X * self.dir
+            # particle発生間隔
+            if self.particle_time > 0:
+                self.particle_time -= 1
+            # particle発生
+            if self.particle_time == 0:
+                tmp_x = self.x
+                tmp_y = self.y
+                if self.dir == 1:
+                    self.game.particles.append(
+                        Particle(self.game, tmp_x - 2, tmp_y + 4, self.dir, 1)
+                    )
+                elif self.dir == -1:
+                    self.game.particles.append(
+                        Particle(self.game, tmp_x + 10, tmp_y + 4, self.dir, 1)
+                    )
+                # 次の弾発射までの残り時間を設定する
+                self.particle_time = PlayerBullet.PARTICLE_INTERVAL
         elif self.type == 1:
-            self.x += PlayerBullet.SHOT_SPEED_X * self.dir
-            self.y -= PlayerBullet.SHOT_SPEED_Y
-        elif self.type == 2:
-            self.x += PlayerBullet.SHOT_SPEED_X * self.dir
-            self.y += PlayerBullet.SHOT_SPEED_Y
+            self.x = self.x
+            if self.life_time > 5:
+                # 弾をリストから削除する
+                if self in self.game.player_bullets:    # 自機の弾リストに登録されている時
+                    self.game.player_bullets.remove(self)
 
-        # particle発生間隔
-        if self.particle_time > 0:
-            self.particle_time -= 1
-        # particle発生
-        if self.particle_time == 0:
-            tmp_x = self.x
-            tmp_y = self.y
-            if self.dir == 1:
-                self.game.particles.append(
-                    Particle(self.game, tmp_x - 2, tmp_y + 4, self.dir, 1)
-                )
-            elif self.dir == -1:
-                self.game.particles.append(
-                    Particle(self.game, tmp_x + 10, tmp_y + 4, self.dir, 1)
-                )
-            # 次の弾発射までの残り時間を設定する
-            self.particle_time = PlayerBullet.PARTICLE_INTERVAL
 
         """
         # 弾が画面外に出たら弾リストから登録を削除する

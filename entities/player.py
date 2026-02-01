@@ -22,7 +22,7 @@ class Player:
         self.x = x              # X座標
         self.y = y              # Y座標
         self.dir = 1            # 1:right -1:left
-        self.type = 0           # 0:横 1:上 2:下
+        self.type = 1           # 0:通常弾 1:近接攻撃
         self.is_Move = True      # Move flag
         self.is_Walk = False     # Walk flag
         self.is_Dash = False     # Dash flag
@@ -51,7 +51,6 @@ class Player:
                 else:
                     self.x -= Player.DASH_SPEED
                 self.dir = -1
-                self.type = 0
             if pyxel.btn(pyxel.KEY_RIGHT):
                 if self.is_Dash == False:
                     self.is_Walk = True
@@ -62,12 +61,10 @@ class Player:
                 else:
                     self.x += Player.DASH_SPEED
                 self.dir = 1
-                self.type = 0
             #key入力が終わったら
             if pyxel.btnr(pyxel.KEY_RIGHT) or pyxel.btnr(pyxel.KEY_LEFT):
                 self.is_Walk = False
-                self.type = 0
-
+ 
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
             self.shot_timer -= 1
@@ -102,7 +99,7 @@ class Player:
                 self.is_Dash = True
                 self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
-        """
+
         # auto攻撃
         if self.shot_timer == 0:
             # 向きで分岐
@@ -116,7 +113,7 @@ class Player:
                 )
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
-        """
+
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
         self.x = min(self.x, pyxel.width - 8)   #小さい数値を使う
