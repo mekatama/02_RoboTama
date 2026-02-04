@@ -22,7 +22,7 @@ class Player:
         self.x = x              # X座標
         self.y = y              # Y座標
         self.dir = 1            # 1:right -1:left
-        self.type = 1           # 0:通常弾 1:近接攻撃
+        self.type = 0           # 0:通常弾 1:近接攻撃
         self.is_Move = True      # Move flag
         self.is_Walk = False     # Walk flag
         self.is_Dash = False     # Dash flag
@@ -100,8 +100,8 @@ class Player:
                 self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
 
-        # auto攻撃
-        if self.shot_timer == 0:
+        # auto攻撃(Shield無い時)
+        if self.shot_timer == 0 and game.player_shield.is_Shield == False:
             # 向きで分岐
             if self.dir == 1:
                 self.game.player_bullets.append(

@@ -11,12 +11,13 @@ class Particle:
         self.x = x
         self.y = y
         self.dir = dir      # playerの方向
-        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk
+        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片
         self.timer = 0
         self.count = 0
-        self.speed = 2.5    #速度
+        self.speed = 2.5    # 速度
         self.speed_walk = 1.5 #速度
-        self.aim = 0        #攻撃角度
+        self.aim = 0        # 攻撃角度
+        self.rot = 0        # 破片の回転
         self.is_alive = True
         self.radius = Particle.START_RADIUS  # 弾軌跡の半径
 
@@ -63,9 +64,17 @@ class Particle:
             #座標
             self.x += self.speed_walk * math.cos(self.aim)
             self.y += self.speed_walk * -math.sin(self.aim)
+        elif self.type == 4:
+            self.count += 1
+            if self.count > 10:
+                self.is_alive = False
+            #座標
 
     def draw(self):
+        self.rot += 10
         if self.type == 0 or self.type == 2 or self.type == 3:
             pyxel.pset(self.x, self.y, 7)
         elif self.type == 1:
             pyxel.circ(self.x, self.y, self.radius, 7)
+        elif self.type == 4:
+            pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0, self.rot)

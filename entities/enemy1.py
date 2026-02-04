@@ -2,6 +2,7 @@ import pyxel
 #from collision import in_collision, push_back
 from .enemy_blast import Enemy_Blast    # enemyの爆発effectクラス 
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
+from .particle import Particle  # 破壊時particle
 
 # 敵クラス
 class Enemy1:
@@ -18,7 +19,7 @@ class Enemy1:
         self.y = y
         self.dir = 1                    # 1:right -1:left
         self.life_time = 0              # 生存時間
-        self.armor = 6                  # 装甲
+        self.armor = 2                  # 装甲
         self.is_walk = False            #
         self.is_damaged = False         # ダメージを受けたかどうか
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -33,7 +34,11 @@ class Enemy1:
             return                          # 処理終了
         # 爆発エフェクトを生成する
         self.game.enemy_blasts.append(
-           Enemy_Blast(self.game, self.x + 4, self.y + 4)
+           Enemy_Blast(self.game, self.x + 8, self.y + 8)
+        )
+        # 破片
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y - 8, self.dir, 4)
         )
         """
         # アイテムを生成する
