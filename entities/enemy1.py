@@ -37,9 +37,14 @@ class Enemy1:
            Enemy_Blast(self.game, self.x + 8, self.y + 8)
         )
         # 破片
-        self.game.particles.append(
-            Particle(self.game, self.x + 4, self.y - 8, self.dir, 4)
-        )
+        for i in range(2):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y - 8, 1, 4)
+            )
+        for i in range(2):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y - 8, -1, 4)
+            )
         """
         # アイテムを生成する
         # ■■■■後からランダムにする■■■■

@@ -18,9 +18,9 @@ class Particle:
         self.speed_walk = 1.5 #速度
         self.aim = 0        # 攻撃角度
         self.rot = 0        # 破片の回転
-        self.vx = 1.8         # 放物線用
-        self.vy = -2.5         # 放物線用
-        self.gravity = 0.4  # 放物線用
+        self.vx = 1.5         # 放物線用
+        self.vy = -2         # 放物線用
+        self.gravity = 0.2  # 放物線用
         self.is_alive = True
         self.radius = Particle.START_RADIUS  # 弾軌跡の半径
 
@@ -68,13 +68,19 @@ class Particle:
             self.x += self.speed_walk * math.cos(self.aim)
             self.y += self.speed_walk * -math.sin(self.aim)
         elif self.type == 4:
+            if self.count == 0:
+                self.rnd_x = pyxel.rndf(-1, 1)
+                self.rnd_y = pyxel.rndf(-1, 1)
+                print(self.rnd_x)
+
             self.count += 1
-
             self.vy += self.gravity
-            self.x += self.vx
-            self.y += self.vy
+            self.x += (self.vx + self.rnd_x) * self.dir
+            self.y += (self.vy + self.rnd_y)
+#            self.x += (self.vx + pyxel.rndf(0, 0.5)) * self.dir
+#            self.y += (self.vy + pyxel.rndf(0, 1.0))
 
-            if self.count > 15:
+            if self.count > 25 + pyxel.rndi(-5, 5):
                 self.is_alive = False
             #座標
 
