@@ -20,7 +20,6 @@ class Game:
         self.enemy_blasts = []      # 爆発エフェクトのリスト
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
-        self.particleHits = []      # hit時particleのリスト
 
         self.scenes = {                     # シーンの辞書
             "title": TitleScene(self),
@@ -90,11 +89,6 @@ class Game:
     def draw_particles(self):
         for particle in self.particles:
             particle.draw()
-
-    # Hit時particleを描画する
-    def draw_particleHits(self):
-        for particleHit in self.particleHits:
-            particleHit.draw()
 
     # ゲームを更新する
     def update(self):

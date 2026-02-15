@@ -1,6 +1,6 @@
 import pyxel
 from .particle import Particle  # 破壊時particle
-from .particle_hit import ParticleHit  # 破壊時particle
+# from .particle_hit import ParticleHit  # 破壊時particle
 
 # 弾クラス
 class Enemy_Bullet:
@@ -22,12 +22,12 @@ class Enemy_Bullet:
     def add_damage(self):
         # hitパーティクル出す
         if self.dir == 1:
-            self.game.particleHits.append(
-                ParticleHit(self.game, self.x + 6, self.y + 4)
+            self.game.particles.append(
+                Particle(self.game, self.x + 6, self.y + 4, 0, 5)
             )
         else:
-            self.game.particleHits.append(
-                ParticleHit(self.game, self.x, self.y + 4)
+            self.game.particles.append(
+                Particle(self.game, self.x, self.y + 4, 0, 5)
             )
 
         # 弾をリストから削除する

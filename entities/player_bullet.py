@@ -1,6 +1,6 @@
 import pyxel
 from .particle import Particle  # 破壊時particle
-from .particle_hit import ParticleHit  # 破壊時particle
+# from .particle_hit import ParticleHit  # 破壊時particle
 
 # 弾クラス
 class PlayerBullet:
@@ -27,8 +27,8 @@ class PlayerBullet:
                 Particle(self.game, self.x + 4, self.y + 4, self.dir,0)
             )
         # hitパーティクル出す
-        self.game.particleHits.append(
-            ParticleHit(self.game, self.x + 4, self.y + 4)
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y + 4, 0, 5)
         )
         # 弾をリストから削除する
         if self in self.game.player_bullets:    # 自機の弾リストに登録されている時
