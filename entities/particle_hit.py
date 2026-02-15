@@ -1,3 +1,4 @@
+# 廃止
 import pyxel
 
 #■ParticleHit
