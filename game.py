@@ -17,7 +17,6 @@ class Game:
         self.player_bullets = []    # 自機の弾のリスト
         self.player_bombs = []      # 自機の爆弾
         self.enemies = []           # 敵のリスト
-        self.enemy_blasts = []      # 爆発エフェクトのリスト
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
 
@@ -74,11 +73,6 @@ class Game:
     def draw_enemies(self):
         for enemy in self.enemies:
             enemy.draw()
-
-    # 敵の爆発を描画する
-    def draw_enemy_blasts(self):
-        for enemy_blast in self.enemy_blasts:
-            enemy_blast.draw()
 
     # 敵の弾を描画する
     def draw_enemy_bullets(self):

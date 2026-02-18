@@ -6,12 +6,14 @@ class Particle:
     #定数
     START_RADIUS = 3    # 弾軌跡開始時の半径
     END_RADIUS = 1      # 弾軌跡終了時の半径
+    START_RADIUS_EB = 1 # 敵破壊開始時の半径
+    END_RADIUS_EB = 8   # 敵破壊終了時の半径
 
     def __init__(self, game, x, y, dir, type):
         self.x = x
         self.y = y
         self.dir = dir      # playerの方向
-        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit
+        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発
         self.timer = 0
         self.count = 0
         self.speed = 2.5    # 速度
@@ -22,7 +24,8 @@ class Particle:
         self.vy = -2         # 放物線用
         self.gravity = 0.2  # 放物線用
         self.is_alive = True
-        self.radius = Particle.START_RADIUS  # 弾軌跡の半径
+        self.radius = Particle.START_RADIUS     # 弾軌跡の半径
+        self.radius = Particle.START_RADIUS_EB  # 爆発の半径
 
     def update(self):
         # 全方位
@@ -88,6 +91,13 @@ class Particle:
             self.count += 1
             if self.count >= 5:
                 self.is_alive = False
+        # 敵爆発
+        elif self.type == 6:
+        # 半径を大きくする
+            self.radius += 1
+            # 半径が最大になったら爆発エフェクトリストから登録を削除する
+            if self.radius > Particle.END_RADIUS_EB:
+                self.is_alive = False
 
     def draw(self):
         self.rot += 10
@@ -99,3 +109,6 @@ class Particle:
             pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0, self.rot)
         elif self.type == 5:
             pyxel.circb(self.x, self.y, 2, 7)
+        elif self.type == 6:
+            pyxel.circ(self.x, self.y, self.radius, 7)
+            pyxel.circb(self.x, self.y, self.radius, 10)

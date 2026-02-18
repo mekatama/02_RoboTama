@@ -1,6 +1,5 @@
 import pyxel
 #from collision import in_collision, push_back
-from .enemy_blast import Enemy_Blast    # enemyの爆発effectクラス 
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
 from .particle import Particle  # 破壊時particle
 
@@ -33,8 +32,8 @@ class Enemy1:
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
         # 爆発エフェクトを生成する
-        self.game.enemy_blasts.append(
-           Enemy_Blast(self.game, self.x + 8, self.y + 8)
+        self.game.particles.append(
+           Particle(self.game, self.x + 8, self.y + 8, 0, 6)
         )
         # 破片
         for i in range(2):
