@@ -93,10 +93,15 @@ class Particle:
                 self.is_alive = False
         # 敵爆発
         elif self.type == 6:
-        # 半径を大きくする
+            if self.count == 0:
+                #座標
+                self.x += pyxel.rndi(-6, 6)
+                self.y += pyxel.rndi(-6, 6)
+            self.count += 1
+            # 半径を大きくする
             self.radius += 1
             # 半径が最大になったら爆発エフェクトリストから登録を削除する
-            if self.radius > Particle.END_RADIUS_EB:
+            if self.radius > Particle.END_RADIUS_EB + pyxel.rndi(-4, 1):
                 self.is_alive = False
 
     def draw(self):
