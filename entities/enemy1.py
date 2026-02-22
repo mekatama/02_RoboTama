@@ -33,9 +33,13 @@ class Enemy1:
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
         # 爆発エフェクトを生成する
+        self.game.particles.append(
+            Particle(self.game, self.x + 8, self.y + 8, 0, 6)
+        )
+        # 爆発(ランダム)エフェクトを生成する
         for i in range(4):
             self.game.particles.append(
-                Particle(self.game, self.x + 8, self.y + 8, 0, 6)
+                Particle(self.game, self.x + 8, self.y + 8, 0, 7)
             )
         # 破片
         for i in range(2):
