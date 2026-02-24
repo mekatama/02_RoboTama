@@ -44,11 +44,11 @@ class Enemy1:
         # 破片
         for i in range(2):
             self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y - 8, 1, 4)
+                Particle(self.game, self.x + 4, self.y + 8, 1, 4)
             )
         for i in range(2):
             self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y - 8, -1, 4)
+                Particle(self.game, self.x + 4, self.y + 8, -1, 4)
             )
         """
         # アイテムを生成する

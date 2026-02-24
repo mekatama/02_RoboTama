@@ -44,6 +44,7 @@ class PlayScene:
     # プレイ画面を初期化する
     def __init__(self, game):
         self.game = game
+        self.countEnemySpawn = 0    # 敵の生成用count
     # プレイ画面を開始する
     def start(self):
         # 変更前のマップに戻す
@@ -52,10 +53,6 @@ class PlayScene:
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
         game.player = Player(game, 100, 96)  # プレイヤー
-        #仮の敵を生成する
-        self.game.enemies.append(
-            Enemy1(self.game, 64, 96)
-        )
 
     # プレイ画面を更新する
     def update(self):
@@ -68,6 +65,14 @@ class PlayScene:
         enemies = game.enemies
         enemy_bullets = game.enemy_bullets
         particles = game.particles
+
+        self.countEnemySpawn += 1
+        if self.countEnemySpawn > 90:
+            #敵を生成する
+            self.game.enemies.append(
+                Enemy1(self.game, 64, 96)
+            )
+            self.countEnemySpawn = 0
 
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
