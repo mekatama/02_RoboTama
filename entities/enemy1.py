@@ -13,11 +13,11 @@ class Enemy1:
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, dir):
         self.game = game
         self.x = x
         self.y = y
-        self.dir = 1                    # 1:right -1:left
+        self.dir = dir                  # 1:right -1:left
         self.life_time = 0              # 生存時間
         self.armor = 2                  # 装甲
         self.is_walk = False            #
@@ -67,7 +67,7 @@ class Enemy1:
         self.life_time += 1
         # 仮walk
 #        self.x -= 1
-        self.dir = 1
+#        self.dir = 1
         self.is_walk = False
         # [仮]Aキー入力で攻撃
         if pyxel.btnp(pyxel.KEY_A):
