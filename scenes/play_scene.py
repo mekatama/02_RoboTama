@@ -1,4 +1,5 @@
 import pyxel
+import math
 from entities import Player, Enemy1
 
 from collision import get_tile_type
@@ -52,7 +53,7 @@ class PlayScene:
         # プレイ画面の状態を初期化する
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
-        game.player = Player(game, 100, 96)  # プレイヤー
+        game.player = Player(game, 64, 96)  # プレイヤー
 
     # プレイ画面を更新する
     def update(self):
@@ -67,11 +68,16 @@ class PlayScene:
         particles = game.particles
 
         self.countEnemySpawn += 1
+        #敵を左右からランダム生成する
         if self.countEnemySpawn > 90:
-            #敵を生成する
-            self.game.enemies.append(
-                Enemy1(self.game, 64, 96)
-            )
+            if pyxel.rndi(0, 1) == 0:
+                self.game.enemies.append(
+                    Enemy1(self.game, 10, 96)
+                )
+            else:
+                self.game.enemies.append(
+                    Enemy1(self.game, 100, 96)
+                )
             self.countEnemySpawn = 0
 
         # プレイヤーを更新する
