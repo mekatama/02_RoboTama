@@ -20,6 +20,7 @@ class Enemy1:
         self.dir = dir                  # 1:right -1:left
         self.life_time = 0              # 生存時間
         self.armor = 2                  # 装甲
+        self.hp = self.armor + 1
         self.is_walk = False            #
         self.is_damaged = False         # ダメージを受けたかどうか
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -28,6 +29,7 @@ class Enemy1:
     def add_damage(self):
         if self.armor > 0:  # 装甲が残っている時
             self.armor -= 1
+            self.hp -= 1
             self.is_damaged = True
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
@@ -112,3 +114,4 @@ class Enemy1:
             else:
                 pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
 
+        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
