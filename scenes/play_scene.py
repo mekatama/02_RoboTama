@@ -65,6 +65,7 @@ class PlayScene:
         player_bombs = game.player_bombs
         enemies = game.enemies
         enemy_bullets = game.enemy_bullets
+        enemy_scores = game.enemy_scores
         particles = game.particles
 
         self.countEnemySpawn += 1
@@ -131,6 +132,14 @@ class PlayScene:
                     enemy_bullet.add_damage()         # 敵の弾にダメージを与える
                     return
 
+        # 敵のscoreを更新する
+        for enemy_score in enemy_scores.copy():
+            enemy_score.update()
+            # flag onで消す処理入れたい
+            if enemy_score.is_alive == False:
+                if enemy_score in enemy_scores:  # リストに登録されている時
+                    enemy_scores.remove(enemy_score)
+
         # 破壊時particlesを更新する
         for particle in particles.copy():
             particle.update()
@@ -164,6 +173,8 @@ class PlayScene:
         self.game.draw_enemies()
         # 敵の弾を描画する
         self.game.draw_enemy_bullets()
+        # 敵の弾を描画する
+        self.game.draw_enemy_scores()
         # 破壊時particleを描画する
         self.game.draw_particles()
 

@@ -2,6 +2,7 @@ import pyxel
 import math
 #from collision import in_collision, push_back
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
+from .enemy_score import Enemy_Score  # enemyのScoreクラス 
 from .particle import Particle  # 破壊時particle
 
 # 敵クラス
@@ -34,6 +35,10 @@ class Enemy1:
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
+        # scoreを生成する
+        self.game.enemy_scores.append(
+            Enemy_Score(self.game, self.x + 8, self.y, 10)
+        )
         # 爆発エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 8, self.y + 8, 0, 6)

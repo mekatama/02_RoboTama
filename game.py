@@ -19,6 +19,7 @@ class Game:
         self.enemies = []           # 敵のリスト
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
+        self.enemy_scores = []      # 破壊時scoreのリスト
 
         self.scenes = {                     # シーンの辞書
             "title": TitleScene(self),
@@ -83,6 +84,11 @@ class Game:
     def draw_particles(self):
         for particle in self.particles:
             particle.draw()
+
+    # 敵のScoreを描画する
+    def draw_enemy_scores(self):
+        for enemy_score in self.enemy_scores:
+            enemy_score.draw()
 
     # ゲームを更新する
     def update(self):
