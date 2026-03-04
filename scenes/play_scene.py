@@ -54,6 +54,10 @@ class PlayScene:
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
         game.player = Player(game, 64, 96)  # プレイヤー
+        # [仮enemy配置]
+#        self.game.enemies.append(
+#            Enemy1(self.game, 10, 96, 1, 0)
+#        )
 
     # プレイ画面を更新する
     def update(self):
@@ -73,11 +77,11 @@ class PlayScene:
         if self.countEnemySpawn > 90:
             if pyxel.rndi(0, 1) == 0:
                 self.game.enemies.append(
-                    Enemy1(self.game, 10, 96, 1)
+                    Enemy1(self.game, -16, 96, 1, 0)
                 )
             else:
                 self.game.enemies.append(
-                    Enemy1(self.game, 100, 96, -1)
+                    Enemy1(self.game, 128, 96, -1, 0)
                 )
             self.countEnemySpawn = 0
 
