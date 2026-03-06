@@ -7,7 +7,7 @@ class Particle:
     START_RADIUS = 3    # 弾軌跡開始時の半径
     END_RADIUS = 1      # 弾軌跡終了時の半径
     START_RADIUS_EB = 1 # 敵破壊開始時の半径
-    END_RADIUS_EB = 8   # 敵破壊終了時の半径
+    END_RADIUS_EB = 7   # 敵破壊終了時の半径
 
     def __init__(self, game, x, y, dir, type):
         self.x = x
@@ -24,8 +24,8 @@ class Particle:
         self.vy = -2         # 放物線用
         self.gravity = 0.2  # 放物線用
         self.is_alive = True
-        self.radius = Particle.START_RADIUS     # 弾軌跡の半径
-        self.radius = Particle.START_RADIUS_EB  # 爆発の半径
+        self.radius = Particle.START_RADIUS         # 弾軌跡の半径
+        self.radiusEB = Particle.START_RADIUS_EB    # 爆発の半径
 
     def update(self):
         # 全方位
@@ -107,9 +107,9 @@ class Particle:
                 self.y += pyxel.rndi(-6, 6)
             self.count += 1
             # 半径を大きくする
-            self.radius += 1
+            self.radiusEB += 1
             # 半径が最大になったら爆発エフェクトリストから登録を削除する
-            if self.radius > Particle.END_RADIUS_EB + pyxel.rndi(-5, -2):
+            if self.radiusEB > Particle.END_RADIUS_EB + pyxel.rndi(-5, -2):
                 self.is_alive = False
 
     def draw(self):
