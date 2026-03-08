@@ -56,7 +56,7 @@ class PlayScene:
         game.player = Player(game, 64, 96)  # プレイヤー
         # [仮enemy配置]
 #        self.game.enemies.append(
-#            Enemy1(self.game, 10, 96, 1, 0)
+#            Enemy1(self.game, 0, 96, 1, 2)
 #        )
 
     # プレイ画面を更新する
@@ -74,14 +74,14 @@ class PlayScene:
 
         self.countEnemySpawn += 1
         #敵を左右からランダム生成する
-        if self.countEnemySpawn > 90:
+        if self.countEnemySpawn > 120:
             if pyxel.rndi(0, 1) == 0:
                 self.game.enemies.append(
-                    Enemy1(self.game, -16, 96, 1, 1)
+                    Enemy1(self.game, -16, 96, 1, 2)
                 )
             else:
                 self.game.enemies.append(
-                    Enemy1(self.game, 128, 96, -1, 1)
+                    Enemy1(self.game, 128, 96, -1, 2)
                 )
             self.countEnemySpawn = 0
 

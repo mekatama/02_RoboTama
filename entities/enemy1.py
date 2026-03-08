@@ -11,7 +11,8 @@ class Enemy1:
     KIND_A = 0  # 敵A(前進のみ)
     KIND_B = 1  # 敵B(画面内に少し入って停止から攻撃loop)
     KIND_C = 2  # 敵C(前進と攻撃をloop)
-    SHOT_INTERVAL = 100      # 弾の発射間隔
+    SHOT_INTERVAL_B = 100      # 弾の発射間隔
+    SHOT_INTERVAL_C = 40   # 弾の発射間隔
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -100,7 +101,7 @@ class Enemy1:
                 elif self.dir == 1:
                     self.x += 1 # walk
             else:
-                # auto攻撃(Shield無い時)
+                # 攻撃
                 if self.shot_timer == 0 :
                     # 向きで分岐
                     if self.dir == 1:
@@ -112,12 +113,39 @@ class Enemy1:
                             Enemy_Bullet(self.game, self.x - 8, self.y + 4, self.dir)
                         )
                     # 次の弾発射までの残り時間を設定する
-                    self.shot_timer = Enemy1.SHOT_INTERVAL
-
+                    self.shot_timer = Enemy1.SHOT_INTERVAL_B
 
         # 敵C
         elif self.kind == Enemy1.KIND_C:
-            pass
+            # walk判定
+            if self.stop_time == 20:
+                self.is_walk = False
+            elif self.stop_time == 60:
+                self.is_walk = True
+                self.stop_time = 0  # 初期化
+            # 行動分岐        
+            if self.is_walk == True:
+                if self.dir == -1:
+                    self.x -= 1 # walk
+                elif self.dir == 1:
+                    self.x += 1 # walk
+            else:
+                # 弾の発射間隔timer制御
+                if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
+                    self.shot_timer -= 1
+                # 攻撃
+                if self.shot_timer == 0 :
+                    # 向きで分岐
+                    if self.dir == 1:
+                        self.game.enemy_bullets.append(
+                            Enemy_Bullet(self.game, self.x + 16, self.y + 4, self.dir)
+                        )
+                    else:
+                        self.game.enemy_bullets.append(
+                            Enemy_Bullet(self.game, self.x - 8, self.y + 4, self.dir)
+                        )
+                    # 次の弾発射までの残り時間を設定する
+                    self.shot_timer = Enemy1.SHOT_INTERVAL_C
         # 仮walk
 #        self.x -= 1
 #        self.dir = 1
@@ -126,19 +154,7 @@ class Enemy1:
             self.game.enemy_bullets.append(
                 Enemy_Bullet(self.game, self.x, self.y + 4, self.dir)
             )
-        """
-        # 敵A(空中)を更新する
-        if self.kind == Enemy1.KIND_A:
-            pass
 
-        # 敵B(地上停止)を更新する
-        elif self.kind == Zako1.KIND_B:
-            pass
-
-        # 敵C(地上移動)を更新する
-        elif self.kind == Zako1.KIND_C:
-            pass
-        """
     # 敵を描画する
     def draw(self):
         # 4フレーム周期で0と16を交互に繰り返す
