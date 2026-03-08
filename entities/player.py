@@ -65,10 +65,6 @@ class Player:
             if pyxel.btnr(pyxel.KEY_RIGHT) or pyxel.btnr(pyxel.KEY_LEFT):
                 self.is_Walk = False
  
-        # 弾の発射間隔timer制御
-        if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
-            self.shot_timer -= 1
-        
         # dash時間の制御
         if self.dash_timer > 0:
             self.dash_timer -= 1
@@ -100,6 +96,10 @@ class Player:
                 self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
 
+        # 弾の発射間隔timer制御
+        if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
+            self.shot_timer -= 1
+        
         # auto攻撃(Shield無い時)
         if self.shot_timer == 0 and game.player_shield.is_Shield == False:
             # 向きで分岐
