@@ -21,7 +21,7 @@ class Enemy1:
         self.x = x
         self.y = y
         self.dir = dir                  # 1:right -1:left
-        self.stop_time = 0              # 生存時間
+        self.stop_time = 0              # 通常停止時間
         self.shot_timer = 0             # 弾発射までの残り時間
         self.armor = 1                  # 装甲
         self.kind = kind                # enemy種
@@ -30,6 +30,7 @@ class Enemy1:
         self.is_walk = True             #
         self.is_damaged = False         # ダメージを受けたかどうか
         self.is_charge = False          # 体当たりされたflag
+        self.is_chargeStop = False      # ノックバック後の硬直flag
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -81,16 +82,26 @@ class Enemy1:
         # playerの体当たり後の硬直時間
         if self.is_charge == True:
             self.stiffness += 1
-            if self.stiffness > 60:
+            if self.stiffness > 8 and self.stiffness < 29:
+                self.is_chargeStop = True
+            if self.stiffness > 30 and self.is_chargeStop == True:
                 self.is_charge = False
-                self.stiffness = 0  # 初期化
-
+                self.is_chargeStop = False  # 初期化
+                self.stiffness = 0          # 初期化
+    
         # 敵A
-        if self.kind == Enemy1.KIND_A and self.is_charge == False:
-            if self.dir == -1:
-                self.x -= 1 # walk
-            elif self.dir == 1:
-                self.x += 1 # walk
+        if self.kind == Enemy1.KIND_A:
+            if self.is_chargeStop == False:
+                if self.is_charge == False:
+                    if self.dir == -1:
+                        self.x -= 1 # walk
+                    elif self.dir == 1:
+                        self.x += 1 # walk
+                else:
+                    if self.dir == -1:
+                        self.x += 5 # ノックバック
+                    elif self.dir == 1:
+                        self.x -= 5 # ノックバック
 
         # 敵B
         elif self.kind == Enemy1.KIND_B and self.is_charge == False:
