@@ -77,11 +77,11 @@ class PlayScene:
         if self.countEnemySpawn > 120:
             if pyxel.rndi(0, 1) == 0:
                 self.game.enemies.append(
-                    Enemy1(self.game, -16, 96, 1, 2)
+                    Enemy1(self.game, -16, 96, 1, 0)
                 )
             else:
                 self.game.enemies.append(
-                    Enemy1(self.game, 128, 96, -1, 2)
+                    Enemy1(self.game, 128, 96, -1, 0)
                 )
             self.countEnemySpawn = 0
 
@@ -119,8 +119,13 @@ class PlayScene:
             # 弾(プレイヤー)と敵が接触したらゲームオーバー
             if player is not None:
                 if check_collision(enemy, player):
-                    game.change_scene("gameover")
-                    return
+                    if player.is_Dash == True:
+                        # enemy吹き飛ばす
+                        enemy.is_charge = True
+                        pass
+                    else:
+                        game.change_scene("gameover")
+                        return
 
         # 敵の弾を更新する
         for enemy_bullet in enemy_bullets.copy():

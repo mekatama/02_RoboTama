@@ -26,8 +26,10 @@ class Enemy1:
         self.armor = 1                  # 装甲
         self.kind = kind                # enemy種
         self.hp = self.armor + 1
+        self.stiffness = 0              # 硬直時間のカウント
         self.is_walk = True             #
         self.is_damaged = False         # ダメージを受けたかどうか
+        self.is_charge = False          # 体当たりされたflag
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -76,18 +78,22 @@ class Enemy1:
     def update(self):
         # 停止判定をカウントする
         self.stop_time += 1
-        # playerとの距離判定
-#        if self.x - self.game.player.x > 20:
-#        print(self.x - self.game.player.x)
+        # playerの体当たり後の硬直時間
+        if self.is_charge == True:
+            self.stiffness += 1
+            if self.stiffness > 60:
+                self.is_charge = False
+                self.stiffness = 0  # 初期化
+
         # 敵A
-        if self.kind == Enemy1.KIND_A:
+        if self.kind == Enemy1.KIND_A and self.is_charge == False:
             if self.dir == -1:
                 self.x -= 1 # walk
             elif self.dir == 1:
                 self.x += 1 # walk
 
         # 敵B
-        elif self.kind == Enemy1.KIND_B:
+        elif self.kind == Enemy1.KIND_B and self.is_charge == False:
             # 弾の発射間隔timer制御
             if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
                 self.shot_timer -= 1
@@ -116,7 +122,7 @@ class Enemy1:
                     self.shot_timer = Enemy1.SHOT_INTERVAL_B
 
         # 敵C
-        elif self.kind == Enemy1.KIND_C:
+        elif self.kind == Enemy1.KIND_C and self.is_charge == False:
             # walk判定
             if self.stop_time == 20:
                 self.is_walk = False
