@@ -98,11 +98,11 @@ class Enemy1:
                     elif self.dir == 1:
                         self.x += 1 # walk
                 else:
-                    if self.dir == -1:
+                    # playerの向きでノックバック方向を分岐
+                    if self.game.player.dir == 1:
                         self.x += 5 # ノックバック
-                    elif self.dir == 1:
+                    elif self.game.player.dir == -1:
                         self.x -= 5 # ノックバック
-
         # 敵B
         elif self.kind == Enemy1.KIND_B and self.is_charge == False:
             # 弾の発射間隔timer制御
