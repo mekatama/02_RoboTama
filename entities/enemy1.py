@@ -82,9 +82,11 @@ class Enemy1:
         # playerの体当たり後の硬直時間
         if self.is_charge == True:
             self.stiffness += 1
+            self.is_walk = False
             if self.stiffness > 8 and self.stiffness < 29:
                 self.is_chargeStop = True
             if self.stiffness > 30 and self.is_chargeStop == True:
+                self.is_walk = True
                 self.is_charge = False
                 self.is_chargeStop = False  # 初期化
                 self.stiffness = 0          # 初期化
@@ -93,11 +95,13 @@ class Enemy1:
         if self.kind == Enemy1.KIND_A:
             if self.is_chargeStop == False:
                 if self.is_charge == False:
+                    self.is_walk = True
                     if self.dir == -1:
                         self.x -= 1 # walk
                     elif self.dir == 1:
                         self.x += 1 # walk
                 else:
+                    self.is_walk = False
                     # playerの向きでノックバック方向を分岐
                     if self.game.player.dir == 1:
                         self.x += 5 # ノックバック
@@ -163,15 +167,13 @@ class Enemy1:
                         )
                     # 次の弾発射までの残り時間を設定する
                     self.shot_timer = Enemy1.SHOT_INTERVAL_C
-        # 仮walk
-#        self.x -= 1
-#        self.dir = 1
+        """
         # [仮]Aキー入力で攻撃
         if pyxel.btnp(pyxel.KEY_A):
             self.game.enemy_bullets.append(
                 Enemy_Bullet(self.game, self.x, self.y + 4, self.dir)
             )
-
+        """
     # 敵を描画する
     def draw(self):
         # 4フレーム周期で0と16を交互に繰り返す
@@ -187,14 +189,27 @@ class Enemy1:
             else:
                 pyxel.blt(self.x, self.y, 0, 32 + u, 56, 16 * self.dir, 16, 0)
         else:
-            if self.is_damaged:
-                #ダメージ演出
-                self.is_damaged = False
-                for i in range(1, 15):
-                    pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-                pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
-                pyxel.pal() #カラーパレット元に戻す
+            if self.is_charge == True:
+                if self.is_damaged:
+                    #ダメージ演出
+                    self.is_damaged = False
+                    for i in range(1, 15):
+                        pyxel.pal(i, 15)    #カラーパレットの色を置き換える
+                    pyxel.blt(self.x, self.y, 0, 48, 40, 16 * self.dir, 16, 0)
+                    pyxel.pal() #カラーパレット元に戻す
+                else:
+                    pyxel.blt(self.x, self.y, 0, 48, 40, 16 * self.dir, 16, 0)
             else:
-                pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
+                # idle motion
+                if self.is_damaged:
+                    #ダメージ演出
+                    self.is_damaged = False
+                    for i in range(1, 15):
+                        pyxel.pal(i, 15)    #カラーパレットの色を置き換える
+                    pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
+                    pyxel.pal() #カラーパレット元に戻す
+                else:
+                    pyxel.blt(self.x, self.y, 0, 32 + u, 40, 16 * self.dir, 16, 0)
+
 
         pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
