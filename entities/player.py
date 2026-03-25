@@ -104,14 +104,14 @@ class Player:
         if self.shot_timer == 0 and game.player_shield.is_Shield == False:
             # 向きで分岐
             if self.dir == 1:
-#                self.game.player_bullets.append(
-#                    PlayerBullet(self.game, self.x + 16, self.y + 2, self.dir, self.type)
-#                )
+                self.game.player_bullets.append(
+                    PlayerBullet(self.game, self.x + 16, self.y + 2, self.dir, self.type)
+                )
                 pass
             else:
-#                self.game.player_bullets.append(
-#                    PlayerBullet(self.game, self.x - 8, self.y + 2, self.dir, self.type)
-#                )
+                self.game.player_bullets.append(
+                    PlayerBullet(self.game, self.x - 8, self.y + 2, self.dir, self.type)
+                )
                 pass
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL

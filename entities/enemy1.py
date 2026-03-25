@@ -11,6 +11,9 @@ class Enemy1:
     KIND_A = 0  # 敵A(前進のみ)
     KIND_B = 1  # 敵B(画面内に少し入って停止から攻撃loop)
     KIND_C = 2  # 敵C(前進と攻撃をloop)
+    KIND_A_SCORE = 10  # 敵A_SCORE
+    KIND_B_SCORE = 20  # 敵B_SCORE
+    KIND_C_SCORE = 50  # 敵C_SCORE
     SHOT_INTERVAL_B = 100      # 弾の発射間隔
     SHOT_INTERVAL_C = 40   # 弾の発射間隔
     enemy_bullets = []     # 敵の弾のリスト
@@ -25,6 +28,7 @@ class Enemy1:
         self.shot_timer = 0             # 弾発射までの残り時間
         self.armor = 1                  # 装甲
         self.kind = kind                # enemy種
+        self.score = 0                  # enemy score
         self.hp = self.armor + 1
         self.stiffness = 0              # 硬直時間のカウント
         self.is_walk = True             #
@@ -42,9 +46,16 @@ class Enemy1:
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
+        # score確定
+        if self.kind == Enemy1.KIND_A:
+            self.score = Enemy1.KIND_A_SCORE
+        elif self.kind == Enemy1.KIND_B:
+            self.score = Enemy1.KIND_B_SCORE
+        elif self.kind == Enemy1.KIND_C:
+            self.score = Enemy1.KIND_C_SCORE
         # scoreを生成する
         self.game.enemy_scores.append(
-            Enemy_Score(self.game, self.x + 8, self.y, 10)
+            Enemy_Score(self.game, self.x + 8, self.y, self.score)
         )
         # 爆発エフェクトを生成する
         self.game.particles.append(
