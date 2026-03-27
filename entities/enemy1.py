@@ -37,6 +37,13 @@ class Enemy1:
         self.is_chargeStop = False      # ノックバック後の硬直flag
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
+    # 敵のwalk
+    def walk(self):
+        if self.dir == -1:
+            self.x -= 1 # walk
+        elif self.dir == 1:
+            self.x += 1 # walk
+
     # 敵にダメージを与える
     def add_damage(self):
         if self.armor > 0:  # 装甲が残っている時
@@ -107,10 +114,7 @@ class Enemy1:
             if self.is_chargeStop == False:
                 if self.is_charge == False:
                     self.is_walk = True
-                    if self.dir == -1:
-                        self.x -= 1 # walk
-                    elif self.dir == 1:
-                        self.x += 1 # walk
+                    self.walk()
                 else:
                     self.is_walk = False
                     # playerの向きでノックバック方向を分岐
@@ -128,10 +132,7 @@ class Enemy1:
                 self.is_walk = False
             # 行動分岐        
             if self.is_walk == True:
-                if self.dir == -1:
-                    self.x -= 1 # walk
-                elif self.dir == 1:
-                    self.x += 1 # walk
+                self.walk()
             else:
                 # 攻撃
                 if self.shot_timer == 0 :
@@ -157,10 +158,7 @@ class Enemy1:
                 self.stop_time = 0  # 初期化
             # 行動分岐        
             if self.is_walk == True:
-                if self.dir == -1:
-                    self.x -= 1 # walk
-                elif self.dir == 1:
-                    self.x += 1 # walk
+                self.walk()
             else:
                 # 弾の発射間隔timer制御
                 if self.shot_timer > 0:  # 弾発射までの残り時間を減らす

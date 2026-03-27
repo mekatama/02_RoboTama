@@ -81,7 +81,7 @@ class PlayScene:
                 )
             else:
                 self.game.enemies.append(
-                    Enemy1(self.game, 128, 96, -1, 2)
+                    Enemy1(self.game, 128, 96, -1, 1)
                 )
             self.countEnemySpawn = 0
 
