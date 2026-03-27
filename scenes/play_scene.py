@@ -77,11 +77,11 @@ class PlayScene:
         if self.countEnemySpawn > 120:
             if pyxel.rndi(0, 1) == 0:
                 self.game.enemies.append(
-                    Enemy1(self.game, -16, 96, 1, 1)
+                    Enemy1(self.game, -16, 96, 1, 0)
                 )
             else:
                 self.game.enemies.append(
-                    Enemy1(self.game, 128, 96, -1, 1)
+                    Enemy1(self.game, 128, 96, -1, 0)
                 )
             self.countEnemySpawn = 0
 

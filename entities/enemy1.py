@@ -43,6 +43,13 @@ class Enemy1:
             self.x -= 1 # walk
         elif self.dir == 1:
             self.x += 1 # walk
+    # 敵のknockback
+    def knockback(self):
+        # playerの向きでノックバック方向を分岐
+        if self.game.player.dir == 1:
+            self.x += 5 # ノックバック
+        elif self.game.player.dir == -1:
+            self.x -= 5 # ノックバック
 
     # 敵にダメージを与える
     def add_damage(self):
@@ -117,11 +124,7 @@ class Enemy1:
                     self.walk()
                 else:
                     self.is_walk = False
-                    # playerの向きでノックバック方向を分岐
-                    if self.game.player.dir == 1:
-                        self.x += 5 # ノックバック
-                    elif self.game.player.dir == -1:
-                        self.x -= 5 # ノックバック
+                    self.knockback()
         # 敵B
         elif self.kind == Enemy1.KIND_B and self.is_charge == False:
             # 弾の発射間隔timer制御
