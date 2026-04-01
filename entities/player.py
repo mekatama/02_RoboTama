@@ -12,7 +12,7 @@ class Player:
     #定数
     MOVE_SPEED = 0.7          # 移動速度
     DASH_SPEED = 3         # 特殊移動速度
-    SHOT_INTERVAL = 20      # 弾の発射間隔
+    SHOT_INTERVAL = 2000      # 弾の発射間隔
     DASH_INTERVAL = 40       # dash間隔
     HP = 3                  # 初期HP
 
@@ -22,6 +22,7 @@ class Player:
         self.x = x              # X座標
         self.y = y              # Y座標
         self.dir = 1            # 1:right -1:left
+        self.dir_tmp = 0        # 一時保存
         self.type = 0           # 0:通常弾 1:近接攻撃
         self.is_Move = True      # Move flag
         self.is_Walk = False     # Walk flag
@@ -95,6 +96,7 @@ class Player:
                 self.is_Dash = True
                 self.is_DashInput = True
                 self.dash_timer = Player.DASH_INTERVAL
+                self.dir_tmp = self.dir     # dash開始時の向きをenemyに渡す
 
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす

@@ -14,7 +14,7 @@ class Enemy1:
     KIND_A_SCORE = 10  # 敵A_SCORE
     KIND_B_SCORE = 20  # 敵B_SCORE
     KIND_C_SCORE = 50  # 敵C_SCORE
-    SHOT_INTERVAL_B = 100      # 弾の発射間隔
+    SHOT_INTERVAL_B = 1000      # 弾の発射間隔
     SHOT_INTERVAL_C = 40   # 弾の発射間隔
     enemy_bullets = []     # 敵の弾のリスト
 
@@ -24,6 +24,7 @@ class Enemy1:
         self.x = x
         self.y = y
         self.dir = dir                  # 1:right -1:left
+        self.dir_tmp = 0                # 一時保存
         self.stop_time = 0              # 通常停止時間
         self.shot_timer = 0             # 弾発射までの残り時間
         self.armor = 1                  # 装甲
@@ -46,9 +47,9 @@ class Enemy1:
     # 敵のknockback
     def knockback(self):
         # playerの向きでノックバック方向を分岐
-        if self.game.player.dir == 1:
+        if self.game.player.dir_tmp == 1:       # 右向き
             self.x += 5 # ノックバック
-        elif self.game.player.dir == -1:
+        elif self.game.player.dir_tmp == -1:    # 左向き
             self.x -= 5 # ノックバック
 
     # 敵にダメージを与える
@@ -108,8 +109,10 @@ class Enemy1:
         if self.is_charge == True:
             self.stiffness += 1
             self.is_walk = False
+            #  硬直開始
             if self.stiffness > 8 and self.stiffness < 29:
                 self.is_chargeStop = True
+            #  硬直終了
             if self.stiffness > 30 and self.is_chargeStop == True:
                 self.is_walk = True
                 self.is_charge = False
@@ -126,7 +129,8 @@ class Enemy1:
                     self.is_walk = False
                     self.knockback()
         # 敵B
-        elif self.kind == Enemy1.KIND_B and self.is_charge == False:
+#        elif self.kind == Enemy1.KIND_B and self.is_charge == False:
+        elif self.kind == Enemy1.KIND_B:
             # 弾の発射間隔timer制御
             if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
                 self.shot_timer -= 1
@@ -134,6 +138,14 @@ class Enemy1:
             if self.stop_time > 20:
                 self.is_walk = False
             # 行動分岐        
+            if self.is_chargeStop == False:
+                if self.is_charge == False:
+                    self.is_walk = True
+                    self.walk()
+                else:
+                    self.is_walk = False
+                    self.knockback()
+            """
             if self.is_walk == True:
                 self.walk()
             else:
@@ -150,7 +162,7 @@ class Enemy1:
                         )
                     # 次の弾発射までの残り時間を設定する
                     self.shot_timer = Enemy1.SHOT_INTERVAL_B
-
+            """
         # 敵C
         elif self.kind == Enemy1.KIND_C and self.is_charge == False:
             # walk判定
@@ -160,9 +172,14 @@ class Enemy1:
                 self.is_walk = True
                 self.stop_time = 0  # 初期化
             # 行動分岐        
-            if self.is_walk == True:
-                self.walk()
-            else:
+            if self.is_chargeStop == False:
+                if self.is_charge == False:
+                    self.is_walk = True
+                    self.walk()
+                else:
+                    self.is_walk = False
+                    self.knockback()
+            if self.is_walk == False and self.is_chargeStop == False and self.is_charge == False:
                 # 弾の発射間隔timer制御
                 if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
                     self.shot_timer -= 1
