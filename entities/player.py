@@ -10,11 +10,11 @@ from .particle import Particle  # 破壊時particle
 # プレイヤークラス
 class Player:
     #定数
-    MOVE_SPEED = 0.7          # 移動速度
-    DASH_SPEED = 3         # 特殊移動速度
-    SHOT_INTERVAL = 2000      # 弾の発射間隔
-    DASH_INTERVAL = 40       # dash間隔
-    HP = 3                  # 初期HP
+    MOVE_SPEED = 0.7        # 移動速度
+    DASH_SPEED = 3          # 特殊移動速度
+    SHOT_INTERVAL = 2000    # 弾の発射間隔
+    DASH_INTERVAL = 40      # dash間隔
+    HP = 100                # 初期HP
 
     # プレイヤーを初期化する
     def __init__(self, game, x, y):
@@ -31,6 +31,7 @@ class Player:
         self.is_Shield = False   # Shield flag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.dash_timer = 0     # dash時間
+        self.hp_count = 0       # HP減らすカウント
         self.hp = Player.HP     # HP
         self.hit_area = (0, 0, 16, 16)  # 当たり判定の領域 (x1,y1,x2,y2) 
         game.player_arm1 = Player_Arm1(game, self.x + 16, self.y + 16)      # arm1
@@ -38,6 +39,11 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
+        self.hp_count += 1
+        if self.hp_count == 10:
+            self.hp -= 1
+            self.hp_count = 0
+        
         game = self.game
         if self.is_Move == True:
             # キー入力で自機を移動させる
