@@ -58,6 +58,10 @@ class PlayScene:
 #        self.game.enemies.append(
 #            Enemy1(self.game, 0, 96, 1, 2)
 #        )
+        # [仮item配置]
+#        self.game.items.append(
+#            Item(self.game, 0, 96, 1, 2)
+#        )
 
     # プレイ画面を更新する
     def update(self):
@@ -71,6 +75,7 @@ class PlayScene:
         enemy_bullets = game.enemy_bullets
         enemy_scores = game.enemy_scores
         particles = game.particles
+        items = game.items
 
         self.countEnemySpawn += 1
         #敵を左右からランダム生成する
@@ -157,6 +162,13 @@ class PlayScene:
                 if particle in particles:  # リストに登録されている時
                     particles.remove(particle)
 
+        # itemを更新する
+        for item in items.copy():
+            item.update()
+            # itemとplayerが接触したら消去
+            if player is not None and check_collision(player, item):
+                item.add_damage()         # itemにダメージを与える
+
         # [debug]キー入力をチェックする
         if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
             # プレイ画面に切り替える
@@ -186,9 +198,11 @@ class PlayScene:
         self.game.draw_enemy_scores()
         # 破壊時particleを描画する
         self.game.draw_particles()
+        # itemを描画する
+        self.game.draw_items()
 
         # スコアを描画する
 #        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
 
         # テキストを描画する
-        pyxel.text(31, 108, "- PRESS ENTER -", 6)
+#        pyxel.text(31, 108, "- PRESS ENTER -", 6)
