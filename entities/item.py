@@ -1,4 +1,5 @@
 import pyxel
+from .particle import Particle  # particle
 
 # アイテムクラス
 class Item:
@@ -15,6 +16,10 @@ class Item:
     # アイテムにダメージを与える
     def add_damage(self):
         self.game.player.hp += Item.ADD_HP
+        # 爆発エフェクトを生成する
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y + 4, 0, 8)
+        )
         # アイテムをリストから削除する
         if self in self.game.items:  # 爆弾リストに登録されている時
             self.game.items.remove(self)

@@ -94,7 +94,7 @@ class Enemy1:
         # アイテムを生成する
         # ■■■■後からランダムにする■■■■
         self.game.items.append(
-            Item(self.game, self.x, self.y)
+            Item(self.game, self.x + 4, self.y + 8)
         )
         # 敵をリストから削除する
         if self in self.game.enemies:  # 敵リストに登録されている時

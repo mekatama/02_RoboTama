@@ -13,7 +13,7 @@ class Particle:
         self.x = x
         self.y = y
         self.dir = dir      # playerの方向
-        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発 7:敵爆発(ランダム)
+        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発 7:敵爆発(ランダム) 8:item取得
         self.timer = 0
         self.count = 0
         self.speed = 2.5    # 速度
@@ -111,6 +111,14 @@ class Particle:
             # 半径が最大になったら爆発エフェクトリストから登録を削除する
             if self.radiusEB > Particle.END_RADIUS_EB + pyxel.rndi(-5, -2):
                 self.is_alive = False
+        # item取得
+        elif self.type == 8:
+            self.count += 1
+            # 半径を大きくする
+            self.radius += 1
+            # 半径が最大になったら爆発エフェクトリストから登録を削除する
+            if self.radius > Particle.END_RADIUS_EB:
+                self.is_alive = False
 
     def draw(self):
         self.rot += 10
@@ -127,4 +135,6 @@ class Particle:
             pyxel.circb(self.x, self.y, self.radius, 9)
         elif self.type == 7:
             pyxel.circ(self.x, self.y, self.radius, 7)
+            pyxel.circb(self.x, self.y, self.radius, 10)
+        elif self.type == 8:
             pyxel.circb(self.x, self.y, self.radius, 10)
