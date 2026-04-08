@@ -5,12 +5,15 @@ from .particle import Particle  # particle
 class Item:
     #定数
     ADD_HP = 20     # playerHP回復量
+    LIFE_TIME = 60  # 生存時間
 
     # アイテムを初期化してゲームに登録する
     def __init__(self, game, x, y):
         self.game = game
         self.x = x
         self.y = y
+        self.life_time = 0
+        self.is_alive = True
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域
 
     # アイテムにダメージを与える
@@ -27,13 +30,19 @@ class Item:
     # アイテムを更新するgame.
     def update(self):
         #生存時間カウント
-#        self.life_time += 1
+        self.life_time += 1
         # 座標を更新する
 #        self.x += 2
 #        self.y += 2
-        print("item")
-        pass
+        # 削除する
+        if self.life_time >= Item.LIFE_TIME + 32:
+            self.is_alive = False
 
     # アイテムを描画する
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 0, 16, 8, 8, 0)
+        # 4フレーム周期で0と8を交互に繰り返す
+        u = pyxel.frame_count  // 6 % 2 * 8
+        if self.life_time >= Item.LIFE_TIME:
+            pyxel.blt(self.x, self.y, 0, 0 + u, 16, 8, 8, 0)
+        else:
+            pyxel.blt(self.x, self.y, 0, 0, 16, 8, 8, 0)

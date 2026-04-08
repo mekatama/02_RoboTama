@@ -168,6 +168,10 @@ class PlayScene:
             # itemとplayerが接触したら消去
             if player is not None and check_collision(player, item):
                 item.add_damage()         # itemにダメージを与える
+            # flag onで消す処理入れたい
+            if item.is_alive == False:
+                if item in items:  # リストに登録されている時
+                    items.remove(item)
 
         # [debug]キー入力をチェックする
         if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
