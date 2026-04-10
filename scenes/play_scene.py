@@ -93,6 +93,10 @@ class PlayScene:
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
             player.update()
+            if player.hp <= 0:
+                game.change_scene("gameover")
+                return
+
 
         # arm1を更新する
         if player_arm1 is not None: #NONE使用時は判定方法が特殊
