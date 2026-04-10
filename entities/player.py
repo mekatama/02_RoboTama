@@ -12,7 +12,8 @@ class Player:
     #定数
     MOVE_SPEED = 0.7        # 移動速度
     DASH_SPEED = 3          # 特殊移動速度
-    SHOT_INTERVAL = 20    # 弾の発射間隔
+    SHOT_INTERVAL = 20      # 弾の発射間隔
+    SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 40      # dash間隔
     HP = 100                # 初期HP
 
@@ -122,7 +123,10 @@ class Player:
                 )
                 pass
             # 次の弾発射までの残り時間を設定する
-            self.shot_timer = Player.SHOT_INTERVAL
+            if self.hp > 40:
+                self.shot_timer = Player.SHOT_INTERVAL
+            else:
+                self.shot_timer = Player.SHOT_INTERVAL2
 
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
