@@ -14,7 +14,7 @@ class PlayerBullet:
         self.x = x
         self.y = y
         self.dir = dir
-        self.type = type        # 0:通常弾 1:近接攻撃
+        self.type = type        # 0:通常弾 1:近接攻撃 2:連射弾
         self.life_time = 0      # 生存時間
         self.particle_time = 0  # particle発生タイマー
         self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
@@ -38,8 +38,8 @@ class PlayerBullet:
     def update(self):
         #生存時間カウント
         self.life_time += 1
-        # 弾の座標を更新する(type 0:横 1:上 2:下)
-        if self.type == 0:
+        # 弾の座標を更新する
+        if self.type == 0 or self.type == 2:
             self.x += PlayerBullet.SHOT_SPEED_X * self.dir
             # particle発生間隔
             if self.particle_time > 0:
@@ -77,4 +77,7 @@ class PlayerBullet:
         """
     # 弾を描画する
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0)
+        if self.type == 0 or self.type == 1:
+            pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0)
+        elif self.type == 2:
+            pyxel.blt(self.x, self.y, 0, 8, 8, 8 * self.dir , 8, 0)
