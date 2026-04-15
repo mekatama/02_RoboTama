@@ -148,3 +148,6 @@ class Player:
         else:
             pyxel.blt(self.x, self.y, 0, 0 + u, 24, 16 * self.dir, 16, 0)
         pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
+        # power up
+        if self.hp <= 40:
+            pyxel.text(self.x - 8,  self.y - 12, "POWER UP", 7)
