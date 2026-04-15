@@ -54,7 +54,7 @@ class Enemy1:
             self.x -= 5 # ノックバック
 
     # 敵にダメージを与える
-    def add_damage(self):
+    def add_damage(self, type):
         if self.armor > 0:  # 装甲が残っている時
             self.armor -= 1
             self.hp -= 1
@@ -62,13 +62,18 @@ class Enemy1:
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
+        # playerの弾
+        if type == 0:
+            temp = 1
+        elif type == 2:
+            temp = 2
         # score確定
         if self.kind == Enemy1.KIND_A:
-            self.score = Enemy1.KIND_A_SCORE
+            self.score = Enemy1.KIND_A_SCORE * temp
         elif self.kind == Enemy1.KIND_B:
-            self.score = Enemy1.KIND_B_SCORE
+            self.score = Enemy1.KIND_B_SCORE * temp
         elif self.kind == Enemy1.KIND_C:
-            self.score = Enemy1.KIND_C_SCORE
+            self.score = Enemy1.KIND_C_SCORE * temp
         # scoreを生成する
         self.game.enemy_scores.append(
             Enemy_Score(self.game, self.x + 8, self.y, self.score)

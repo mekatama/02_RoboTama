@@ -113,7 +113,7 @@ class PlayScene:
             for enemy in enemies.copy():
                 if check_collision(enemy, player_bullet):
                     player_bullet.add_damage()  # 自機の弾にダメージを与える
-                    enemy.add_damage()          # 敵にダメージを与える
+                    enemy.add_damage(player_bullet.type)          # 敵にダメージを与える
 
         # 爆弾を更新する
         for player_bomb in player_bombs.copy():

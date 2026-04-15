@@ -66,7 +66,6 @@ class PlayerBullet:
                     self.game.player_bullets.remove(self)
 
 
-        """
         # 弾が画面外に出たら弾リストから登録を削除する
         if (self.x <= -8 or
             self.x >= pyxel.width or
@@ -74,7 +73,7 @@ class PlayerBullet:
             self.y >= pyxel.height
         ):
             self.game.player_bullets.remove(self)
-        """
+
     # 弾を描画する
     def draw(self):
         if self.type == 0 or self.type == 1:
