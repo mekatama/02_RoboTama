@@ -105,7 +105,7 @@ class Enemy1:
         if self in self.game.enemies:  # 敵リストに登録されている時
             self.game.enemies.remove(self)
         # スコアを加算する
-#        self.game.score += self.level * 10
+        self.game.score += self.score
             
     # 敵を更新する
     def update(self):

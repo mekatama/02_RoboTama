@@ -219,7 +219,7 @@ class PlayScene:
         self.game.draw_items()
 
         # スコアを描画する
-#        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
+        pyxel.text(39, 4, f"SCORE {self.game.score:5}", 7)
 
         # テキストを描画する
 #        pyxel.text(31, 108, "- PRESS ENTER -", 6)
