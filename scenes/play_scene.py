@@ -46,6 +46,8 @@ class PlayScene:
     def __init__(self, game):
         self.game = game
         self.countEnemySpawn = 0    # 敵の生成用count
+        self.playTime = 0           # 難易度用time
+        self.addSpawnTime = 0       # spawn間隔制御用
     # プレイ画面を開始する
     def start(self):
         # 変更前のマップに戻す
@@ -77,9 +79,16 @@ class PlayScene:
         particles = game.particles
         items = game.items
 
-        self.countEnemySpawn += 1
+        # 難易度
+        self.playTime += 1
+        if self.playTime % 60 == 0 and self.addSpawnTime< 80:
+            self.addSpawnTime += 5
+#            print(self.addSpawnTime)
+
         #敵を左右からランダム生成する
-        if self.countEnemySpawn > 120:
+        self.countEnemySpawn += 1
+        if self.countEnemySpawn > 120 - self.addSpawnTime:
+            print(self.countEnemySpawn)
             if pyxel.rndi(0, 1) == 0:
                 self.game.enemies.append(
                     Enemy1(self.game, -16, 96, 1, 0)
